@@ -19,9 +19,54 @@ const quizData = [
     ],
     correctAnswer: 3,
   },
+  {
+    question: 'What data type represents either TRUE or FALSE values?',
+    choices: ['integer', 'event', 'boolean', 'condition'],
+    correctAnswer: 2,
+  },
+  {
+    question:
+      'What is a block of code called that is used to perform a specific task?',
+    choices: ['variable', 'declaration', 'string', 'function'],
+    correctAnswer: 3,
+  },
+  {
+    question:
+      'What element is used to store multiple values in a single variable?',
+    choices: ['function', 'array', 'variable', 'string'],
+    correctAnswer: 1,
+  },
+  {
+    question: 'Which statement is used to end or exit a loop?',
+    choices: ['break', 'close', 'stop', 'quit'],
+    correctAnswer: 0,
+  },
+
+  {
+    question: 'What element is used to store and manipulate text?',
+    choices: ['loop', 'string', 'array', 'function'],
+    correctAnswer: 1,
+  },
+  {
+    question: 'Which event occurs when the user clicks on an HTML element?',
+    choices: ['onmouseclick', 'onmouseover', 'onclick', 'onchange'],
+    correctAnswer: 2,
+  },
+  {
+    question: 'How do you create a function?',
+    choices: [
+      'function = myFunction()',
+      'let function = myFunction',
+      'function:myFunction()',
+      'function myFunction()',
+    ],
+    correctAnswer: 3,
+  },
 ];
 
+const containerElement = document.getElementsByClassName('container');
 const questionContainer = document.getElementById('question-container');
+const questionCounter = document.getElementById('question-counter');
 const questionElement = document.getElementById('question');
 const choicesElement = document.getElementById('choices');
 const submitButton = document.getElementById('submit-btn');
@@ -29,16 +74,18 @@ const resultElement = document.getElementById('result');
 
 let currentQuestion = 0;
 let score = 0;
+let questionNumber = 1;
 const wrongAnswers = [];
 
 function loadQuestion() {
   const { question, choices } = quizData[currentQuestion];
-  questionElement.textContent = question;
+  questionElement.innerHTML = question;
+  questionCounter.innerHTML = `Question ${questionNumber} of ${quizData.length}`;
   choicesElement.innerHTML = '';
 
   choices.forEach((choice, index) => {
     const button = document.createElement('button');
-    button.textContent = choice;
+    button.innerHTML = choice;
     button.addEventListener('click', () => selectChoice(index));
     choicesElement.appendChild(button);
   });
@@ -70,6 +117,7 @@ function submitAnswer() {
   }
 
   currentQuestion++;
+  questionNumber++;
 
   if (currentQuestion < quizData.length) {
     loadQuestion();
@@ -80,12 +128,12 @@ function submitAnswer() {
 
 function showResult() {
   questionContainer.style.display = 'none';
+  questionCounter.style.display = 'none';
   submitButton.style.display = 'none';
 
   let resultHTML = `
-    <p class='score'>You scored 
-      ${Math.round((score * 100) / quizData.length)}%
-      (${score} out of ${quizData.length})
+    <p class='score'>You scored ${Math.round((score * 100) / quizData.length)}%
+    (${score} out of ${quizData.length})
     </p>
   `;
 
@@ -94,11 +142,11 @@ function showResult() {
     resultHTML += '<ul>';
     wrongAnswers.forEach((answer) => {
       resultHTML += `
-      <li>
-      <p>Question: ${answer.question}</p>
-      <p>Your Answer: <span class='wrong'>${answer.userAnswer}</span></p>
-      <p>Correct Answer: <span class='correct'>${answer.correctAnswer}</span></p>
-      </li>
+        <li>
+          <p>Question: ${answer.question}</p>
+          <p>Your answer: <span class='wrong'>${answer.userAnswer}</span></p>
+          <p>Correct Answer: <span class='correct'>${answer.correctAnswer}</span></p>
+        </li>
       `;
     });
     resultHTML += '</ul>';
