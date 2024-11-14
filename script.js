@@ -74,13 +74,14 @@ const resultElement = document.getElementById('result');
 
 let currentQuestion = 0;
 let score = 0;
-let questionNumber = 1;
 const wrongAnswers = [];
 
 function loadQuestion() {
   const { question, choices } = quizData[currentQuestion];
   questionElement.innerHTML = question;
-  questionCounter.innerHTML = `Question ${questionNumber} of ${quizData.length}`;
+  questionCounter.innerHTML = `Question ${currentQuestion + 1} of ${
+    quizData.length
+  }`;
   choicesElement.innerHTML = '';
 
   choices.forEach((choice, index) => {
