@@ -118,7 +118,6 @@ function submitAnswer() {
   }
 
   currentQuestion++;
-  questionNumber++;
 
   if (currentQuestion < quizData.length) {
     loadQuestion();
